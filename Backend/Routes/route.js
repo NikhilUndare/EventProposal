@@ -1,13 +1,11 @@
-
 const express = require('express')
 const bcrypt = require('bcrypt'); 
 const vendors = require('../models/vendor')
-const User = require('../Models/User')
 const dotenv = require("dotenv")
 const { body, validationResult } = require('express-validator');
 var jwt = require('jsonwebtoken');
 dotenv.config();
-const secret = process.env.secret;
+
 const saltRounds = 10;
 
 const router = express.Router();
@@ -38,7 +36,7 @@ router.post("/vendorlogin",
                     const token = jwt.sign({
                         exp: Math.floor(Date.now() / 1000) + (60 * 60),
                         data: 'foobar'
-                    }, secret);
+                    }, process.env.SECRET_CODE);
                     return res.send(token)
                 }
                 else{
@@ -67,11 +65,14 @@ router.post("/vendorlogin",
             const { name,email, password,contact } = req.body;
     
             let vendor_data = await vendors.findOne({ email })
+            let vendor_contact = await vendors.findOne({contact})
     
             if (vendor_data) {
                 return res.status(409).send("User already exists with that email please login")
             }
-    
+            if(vendor_contact){
+                return res.status(409).send("User already exists with that contact please login")
+            }
             bcrypt.hash(password, saltRounds, async function (err, hash) {
                 // Store hash in your password DB.
                 if (err) {
