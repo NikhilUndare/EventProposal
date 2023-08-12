@@ -11,15 +11,10 @@ const secret = process.env.secret;
 const saltRounds = 10;
 
 const router = express.Router();
-
+// vendor login
 router.post("/vendorlogin",
-body('email').isEmail(),
     async (req, res) => {
         try {
-            const errors = validationResult(req);
-            if (!errors.isEmpty()) {
-                return res.status(400).send(errors.array());
-            }
             const { email, password,contact } = req.body;
             let user_data , user_contact, userPassword ;
           
@@ -58,7 +53,8 @@ body('email').isEmail(),
         }
     })
 
-    router.post("/register",
+    //vendor register
+    router.post("/vendorregister",
     body('email').isEmail(),
     body('contact').isLength({min:10, max:10}),
     async (req,res)=>{
