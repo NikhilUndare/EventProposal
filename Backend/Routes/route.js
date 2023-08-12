@@ -2,6 +2,7 @@
 const express = require('express')
 const bcrypt = require('bcrypt'); 
 const vendors = require('../models/vendor')
+const User = require('../Models/User')
 const dotenv = require("dotenv")
 const { body, validationResult } = require('express-validator');
 var jwt = require('jsonwebtoken');
@@ -100,13 +101,6 @@ body('email').isEmail(),
         token = "";
         res.status(200).send("loggedout successfully")
     })
-=======
-const express = require('express');
-const router = express.Router();
-const User = require('../Models/User')
-const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken');
-require('dotenv').config()
 
 
 // for creating a new user 
