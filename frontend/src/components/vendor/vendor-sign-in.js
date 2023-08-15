@@ -63,7 +63,8 @@ const VendorSignIn = () => {
                 </div>
                 <div id="sub-container-2">
                     <div className="container1">
-                        <div className={`box ${showCreateAccountForm ? "expanded" : ""}`}>
+                        <div 
+                        className={`box ${showCreateAccountForm ? "expanded" : ""}`}>
                             <input
                                 type="radio"
                                 className="tab-toggle"
@@ -79,12 +80,16 @@ const VendorSignIn = () => {
                             />
                             <ul className="tab-list">
                                 <li className="tab-item">
-                                    <label className="tab-trigger" htmlFor="tab1">
+                                    <label 
+                                    className="tab-trigger" 
+                                    htmlFor="tab1">
                                         Vendor
                                     </label>
                                 </li>
                                 <li className="tab-item">
-                                    <label className="tab-trigger" htmlFor="tab2">
+                                    <label 
+                                    className="tab-trigger" 
+                                    htmlFor="tab2">
                                         User
                                     </label>
                                 </li>
