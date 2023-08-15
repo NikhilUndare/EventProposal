@@ -1,9 +1,10 @@
 import './App.css';
+import EventProposal from './components/routes/route';
 
 function App() {
   return (
     <div>
-      Event Proposal
+      <EventProposal/>
     </div>
   );
 }
