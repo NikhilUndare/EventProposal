@@ -92,7 +92,7 @@ const VendorSignIn = () => {
                                     ) : (
                                         <form id="form-container" onSubmit={handleSubmit}>
                                             <h4 id="form-heading">Sign in your Account</h4>
-                                            <span id="errMsg">{err?`*${err}*`:""}</span>
+                                            <span id="errMsg">{err ? `*${err}*` : ""}</span>
                                             <input
                                                 type="text"
                                                 placeholder="Email"

@@ -13,6 +13,10 @@ const VendorSignUp = (props) => {
     const handleErrors=(e)=>{
         e.preventDefault();
         console.log(data,"handleerrors")
+        if (!data.contact || !data.name || !data.email || !data.password) {
+            setError("Kindly Fill all the details");
+            return false;
+        }
         let regexEmail=/^\w+([\.-]?\w+)*@gmail\.com$/g
         if(!regexEmail.test(data.email)){
             setError("invalid email format")
@@ -22,10 +26,6 @@ const VendorSignUp = (props) => {
             setError("incorrect contact")
             return false
         }
-        if (!data.contact || !data.name || !data.email || !data.password) {
-            setError("Kindly Fill all the details");
-            return false;
-        }
         if (data.password !== data.confirmPassword) {
             setError("Passwords are not matching");
             return false
@@ -34,7 +34,7 @@ const VendorSignUp = (props) => {
     }
     async function handleSubmit(e) {
         e.preventDefault();
-        const fun = handleErrors(e)
+        const fun = handleErrors(e);
         if(fun){
             setError("")
             await axios.post("https://hfg-9hbu.onrender.com/api/vendorregister",{
