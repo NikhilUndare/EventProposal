@@ -95,7 +95,7 @@ const VendorSignIn = () => {
                                             <span id="errMsg">{err?`*${err}*`:""}</span>
                                             <input
                                                 type="text"
-                                                placeholder="Phone"
+                                                placeholder="Email"
                                                 id="vendor-contact"
                                                 onChange={(e) =>
                                                     setFormValues(
