@@ -115,7 +115,7 @@ router.post("/vendorlogin",
                         exp: Math.floor(Date.now() / 1000) + (60 * 60),
                         data: 'foobar'
                     }, process.env.SECRET_CODE);
-                    return res.send(token)
+                    return res.json({token,userdata:user_data})
                 }
                 else{
                     console.log(err,"err")
@@ -135,6 +135,7 @@ router.post("/vendorlogin",
     body('contact').isLength({min:10, max:10}),
     async (req,res)=>{
         try{
+            console.log("REGISTER")
             console.log(req.body,"req.body")
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
@@ -206,7 +207,7 @@ router.post('/createuser', async (req, res) => {
 
 // login for existing user
 
-router.post('/userlogin', async (req, res) => {
+router.post('/login', async (req, res) => {
     const email = req.body.email
     const password = req.body.password
     const contact = req.body.contact
@@ -237,13 +238,12 @@ router.post('/userlogin', async (req, res) => {
         }
 
         const authToken = jwt.sign(data, process.env.SECRET_CODE)
-        return res.json({ success: true, authToken })
+        return res.json({ success: true, authToken ,userdata})
     } catch (error) {
         console.log(error)
         res.json({ message: error.message })
     }
 })
-
 
 
 module.exports = router;

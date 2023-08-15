@@ -37,7 +37,7 @@ const VendorSignUp = (props) => {
         const fun = handleErrors(e);
         if(fun){
             setError("")
-            await axios.post("https://hfg-9hbu.onrender.com/api/vendorregister",{
+            await axios.post("http://localhost:8080/api/vendorregister",{
             name:data.name,
             email:data.email,
             contact:data.contact,

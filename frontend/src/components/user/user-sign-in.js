@@ -33,14 +33,18 @@ const UserSignIn = () => {
         const fun = handleErrors(e)
         if(fun){
             setError("")
-            await axios.post("https://hfg-9hbu.onrender.com/api/userlogin",{
+            await axios.post("http://localhost:8080/api/login",{
             email:data.email,
             password:data.password
           }).then((res)=>{
             if("password not matching"===res.data){
                 alert("Incorrect password")
             }else{
+                console.log(res.data)
                 alert(`${JSON.stringify(data.email.split("@")[0])} sucessfully logined`)
+                localStorage.setItem("headers",res.data.authToken)
+                localStorage.setItem("userdata",JSON.stringify(res.data.userdata))
+                localStorage.setItem("userlogin",true)
             }       
           }).catch((e)=>{
             alert("user not found")

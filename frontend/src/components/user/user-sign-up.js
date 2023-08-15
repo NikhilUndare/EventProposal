@@ -40,7 +40,7 @@ const UserSignUp = (props) => {
         // let formdata = new FormData(e.target);
         if(fun){
             setError("")
-            await axios.post("https://hfg-9hbu.onrender.com/api/createuser",{
+            await axios.post("http://localhost:8080/api/createuser",{
             name:data.name,
             email:data.email,
             contact:data.contact,
@@ -48,8 +48,7 @@ const UserSignUp = (props) => {
           }).then((res)=>{
             console.log(res.data,"res")
             alert(`${JSON.stringify(data.name)} thanks for regestering`)
-            props.onSignUpSuccess();
-            
+            props.onSignUpSuccess();     
           }).catch((e)=>{
             console.log(e.message)
             alert("existing email/contact")
