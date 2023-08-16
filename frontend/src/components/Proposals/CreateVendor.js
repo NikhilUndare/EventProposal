@@ -2,11 +2,12 @@ import React, { useContext, useState } from "react";
 import "./sample.css";
 import { PostApi, PutApi } from "./Api_call";
 import { useNavigate } from "react-router-dom";
-import { apiContext } from "../../App";
+
 import Navbar from "../Navbar/Navbar";
+import EventContext from "../users/context/EventContext";
 
 function CreateVendor() {
-  let api_update = useContext(apiContext);
+  let api_update = useContext(EventContext);
   console.log(api_update.apiType["type"]);
 
   let navigate = useNavigate();

@@ -1,31 +1,36 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import "./App.css";
+
+import './App.css';
+import { useEffect, useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+import Home from './components/users/screens/Home';
+import ViewProposal from './components/users/ViewProposal';
+import EventState from './components/users/context/EventState';
 import VendorSignIn from "./components/vendor/vendor-sign-in";
 import CreateVendor from "./components/Proposals/CreateVendor";
 import VendorGet from "./components/Proposals/VendorGet";
-import { createContext, useState } from "react";
 
-let apiContext = createContext();
 
 function App() {
-  let [apiType, setApitype] = useState({ id: "", type: "" });
-  function Updation(update) {
-    setApitype(update);
-  }
+  
+
   return (
-    <>
-      <apiContext.Provider value={{ apiType, Updation }}>
-        <BrowserRouter>
+    <EventState>
+      <BrowserRouter>
+        <div>
           <Routes>
+            <Route path='/userHome' element={<Home />} />
+            <Route path='/viewproposal/:id' element={<ViewProposal />} />
             <Route path="/" element={<VendorSignIn />} />
             <Route path="/getproposal" element={<VendorGet />} />
             <Route path="/createproposal" element={<CreateVendor />} />
           </Routes>
-        </BrowserRouter>
-      </apiContext.Provider>
-    </>
+        </div>
+      </BrowserRouter>
+    </EventState>
+
+
   );
 }
 
 export default App;
-export { apiContext };
+

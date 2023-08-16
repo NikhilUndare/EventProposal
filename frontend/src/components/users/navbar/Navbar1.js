@@ -1,7 +1,7 @@
 import "./Navbar.css";
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
-import profile from "../../assets/profliepic1.jpeg"
+import profile from '../../../assets/profliepic1.jpeg'
 export default function Navbar() {
   const[open,setOpen] = useState(false)
     const navigate = useNavigate()
@@ -11,7 +11,7 @@ export default function Navbar() {
     }
     function handleLogOut(){
         localStorage.removeItem('headers')
-        localStorage.removeItem('vendorlogin')
+        localStorage.removeItem('userlogin')
         navigate('/')
     }
   let {name}=JSON.parse(localStorage.getItem("userdata"))

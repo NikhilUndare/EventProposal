@@ -5,11 +5,11 @@ import edit from "../../assets/pencil-edit-button.jpg";
 import dele from "../../assets/delete.jpg";
 import { DeleteApi, GetApi } from "./Api_call";
 import { useNavigate } from "react-router-dom";
-import { apiContext } from "../../App";
 import Navbar from "../Navbar/Navbar";
+import EventContext from "../users/context/EventContext";
 
 function VendorGet() {
-  let api_update = useContext(apiContext);
+  let api_update = useContext(EventContext);
   let navigate = useNavigate();
   let [sample, setSample] = useState(false);
   let [propose, setPropose] = useState([]);
@@ -17,7 +17,12 @@ function VendorGet() {
     GetApi().then((data) => {
       console.log(data.data);
       setPropose(data.data);
+      if(!localStorage.getItem('headers') && !localStorage.getItem('vendorlogin')){
+            navigate('/')
+        }
     });
+     
+
   }, [sample]);
   let rev = propose.reverse();
   return (

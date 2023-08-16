@@ -175,7 +175,6 @@ router.delete("/deleteproposal/:id", (req, res) => {
 });
 
 
-
 // vendor login
 router.post("/vendorlogin",
     async (req, res) => {
