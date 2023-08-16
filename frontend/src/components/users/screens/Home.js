@@ -29,12 +29,12 @@ export default function Home() {
     }
     useEffect(() => {
         loadData()
-        // if(
-        //     !localStorage.getItem('headers') &&
-        //     !localStorage.getItem('userlogin')
-        // ){
-        //     navigate('/')
-        // }
+        if(
+            !localStorage.getItem('headers') &&
+            !localStorage.getItem('userlogin')
+        ){
+            navigate('/')
+        }
     }, [])
 
     useEffect(() => {

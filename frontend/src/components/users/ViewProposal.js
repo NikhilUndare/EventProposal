@@ -24,12 +24,12 @@ export default function ViewProposal() {
     }
     useEffect(() => {
         loadData()
-        // if(
-        //     !localStorage.getItem('headers') &&
-        //     !localStorage.getItem('userlogin')
-        // ){
-        //     navigate('/')
-        // }
+        if(
+            !localStorage.getItem('headers') &&
+            !localStorage.getItem('userlogin')
+        ){
+            navigate('/')
+        }
     }, [])
 
     const SelectProposal = () =>{
