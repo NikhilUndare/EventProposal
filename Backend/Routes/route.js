@@ -1,9 +1,10 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const vendors = require("../models/vendor");
-const User = require("../Models/User");
-const cloudinary = require("cloudinary").v2;
-const bcrypt = require("bcrypt");
+
+const express = require('express');
+const mongoose = require('mongoose');
+const vendors = require('../Models/vendor')
+const User = require('../Models/User')
+const cloudinary=require('cloudinary').v2;
+const bcrypt = require('bcrypt'); 
 const saltRounds = 10;
 const { body, validationResult } = require("express-validator");
 var jwt = require("jsonwebtoken");
@@ -159,97 +160,94 @@ router.delete("/deleteproposal/:id", (req, res) => {
     });
 });
 
-module.exports = router;
+
 
 // vendor login
-router.post("/vendorlogin", async (req, res) => {
-  try {
-    const { email, password, contact } = req.body;
-    let user_data, user_contact, userPassword;
+router.post("/vendorlogin",
+    async (req, res) => {
+        try {
+            const { email, password } = req.body;
+            console.log(req.body,"req.body")
+            let user_data , userPassword ;
 
-    if (email) {
-      user_data = await vendors.findOne({ email });
-      if (!user_data) {
-        return res.json("User does not exists");
-      }
-      userPassword = user_data.password;
-    } else {
-      user_contact = await vendors.findOne({ contact });
-      if (!user_contact) {
-        return res.json("User does not exists");
-      }
-      userPassword = user_contact.password;
-    }
+                user_data = await vendors.findOne({  email }) 
+                console.log(user_data,"userdata")
+                if (user_data===null) {
+                    console.log("userdata")
+                    return res.status(409).send("User does not exists")
+                } 
+                userPassword = user_data.password
 
-    bcrypt.compare(password, userPassword, function (err, result) {
-      // result == true
-      if (result) {
-        const token = jwt.sign(
-          {
-            exp: Math.floor(Date.now() / 1000) + 60 * 60,
-            data: "foobar",
-          },
-          process.env.SECRET_CODE
-        );
-        return res.send(token);
-      } else {
-        console.log(err);
-        return res.sendStatus(400);
-      }
-    });
-  } catch (e) {
-    console.log(e);
-    res.sendStatus(400);
-  }
-});
-
-//vendor register
-router.post(
-  "/vendorregister",
-  body("email").isEmail(),
-  body("contact").isLength({ min: 10, max: 10 }),
-  async (req, res) => {
-    try {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        return res.status(400).send(errors.array());
-      }
-
-      const { name, email, password, contact } = req.body;
-
-      let vendor_data = await vendors.findOne({ email });
-      let vendor_contact = await vendors.findOne({ contact });
-
-      if (vendor_data) {
-        return res
-          .status(409)
-          .send("User already exists with that email please login");
-      }
-      if (vendor_contact) {
-        return res
-          .status(409)
-          .send("User already exists with that contact please login");
-      }
-      bcrypt.hash(password, saltRounds, async function (err, hash) {
-        // Store hash in your password DB.
-        if (err) {
-          return res.sendStatus(400).send(err.message);
+            bcrypt.compare(password, userPassword, function (err, result) {
+                // result == true
+                console.log(password,userPassword)
+                if (result) {
+                    console.log(result,"result")
+                    const token = jwt.sign({
+                        exp: Math.floor(Date.now() / 1000) + (60 * 60),
+                        data: 'foobar'
+                    }, process.env.SECRET_CODE);
+                    return res.json({token,userdata:user_data})
+                }
+                else{
+                    console.log(err,"err")
+                    return res.send("password not matching")
+                }
+            })
+            
+        } catch (e) {
+            console.log(e.message)
+            res.sendStatus(400)
         }
+    })
 
-        let vendor = await vendors.create({
-          name: name,
-          contact: contact,
-          email: email,
-          password: hash,
-        });
-        res.send(vendor);
-      });
-    } catch (e) {
-      console.log(e);
-      res.sendStatus(400).send(err.message);
-    }
-  }
-);
+    //vendor register
+    router.post("/vendorregister",
+    body('email').isEmail(),
+    body('contact').isLength({min:10, max:10}),
+    async (req,res)=>{
+        try{
+            console.log("REGISTER")
+            console.log(req.body,"req.body")
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                return res.status(400).send(errors.array());
+            }
+
+            console.log(errors,"errors")
+            const { name,email, password,contact } = req.body;
+    
+            let vendor_data = await vendors.findOne({ email })
+            let vendor_contact = await vendors.findOne({contact})
+            console.log(vendor_contact,vendor_data,"vendor details")
+            if (vendor_data) {
+                console.log("email")
+                return res.status(409).send("User already exists with that email please login")
+            }
+            if(vendor_contact){
+                console.log("contact")
+                return res.status(409).send("User already exists with that contact please login")
+            }
+            bcrypt.hash(password, saltRounds, async function (err, hash) {
+                // Store hash in your password DB.
+                if (err) {
+                    return res.sendStatus(400).send(err.message)
+                }
+    
+                let vendor = await vendors.create({
+                    name:name,
+                    contact:contact,
+                    email: email,
+                    password: hash
+                })
+                res.send(vendor)
+    
+            })
+        } catch (e) {
+            console.log(e)
+            res.sendStatus(400).send(e.message)
+        }
+    })
 
 router.post("/logout", async (req, res) => {
   token = "";
@@ -262,17 +260,18 @@ router.post("/createuser", async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const securePassword = await bcrypt.hash(req.body.password, salt);
 
-    await User.create({
-      name: req.body.name,
-      email: req.body.email,
-      contact: req.body.contact,
-      password: securePassword,
-    });
-    res.json({ success: true });
-  } catch (error) {
-    console.log(error);
-    res.json({ message: error.message });
-  }
+        await User.create({
+            name: req.body.name,
+            email: req.body.email,
+            contact: req.body.contact,
+            password: securePassword
+        })
+        console.log("create user")
+        res.json({ success: true })
+    } catch (error) {
+        console.log(error)
+        res.sendStatus(400)
+    }
 });
 
 // login for existing user
@@ -297,11 +296,9 @@ router.post("/login", async (req, res) => {
 
     const pwdCompare = bcrypt.compareSync(password, userdata.password);
 
-    if (!pwdCompare) {
-      return res
-        .status(400)
-        .json({ errors: "Try logging with correct credentials" });
-    }
+        if (!pwdCompare) {
+            return res.send("password not matching");
+        }
 
     const data = {
       user: {
@@ -309,12 +306,13 @@ router.post("/login", async (req, res) => {
       },
     };
 
-    const authToken = jwt.sign(data, process.env.SECRET_CODE);
-    return res.json({ success: true, authToken });
-  } catch (error) {
-    console.log(error);
-    res.json({ message: error.message });
-  }
-});
+        const authToken = jwt.sign(data, process.env.SECRET_CODE)
+        return res.json({ success: true, authToken ,userdata})
+    } catch (error) {
+        console.log(error)
+        res.json({ message: error.message })
+    }
+})
+
 
 module.exports = router;

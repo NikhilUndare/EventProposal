@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
+import VendorSignIn from './components/vendor/vendor-sign-in';
 import CreateVendor from './components/Proposals/CreateVendor';
 import VendorGet from './components/Proposals/VendorGet';
 import { createContext, useState } from 'react';
@@ -13,17 +14,15 @@ function App() {
       setApitype(update)
   }
   return <>
-
     <apiContext.Provider value={{apiType,Updation}}>
-    <BrowserRouter>
-   <Routes>
+  <BrowserRouter>
+  <Routes>
+    <Route path="/" element={<VendorSignIn/>}/>
     <Route path='/getproposal' element={<VendorGet/>}/>
     <Route path='/createproposal' element={<CreateVendor/>}/>
-   </Routes>
+  </Routes>
   </BrowserRouter>
     </apiContext.Provider>
-
-
   </>
 }
 

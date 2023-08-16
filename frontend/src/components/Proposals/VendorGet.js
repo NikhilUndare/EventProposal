@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import Navbar from "../Navbar/Navbar";
+import Navbar from "../navbar/Navbar";
 import "./VendorGet.css";
 import search from "../../assets/search.jpg";
 import edit from "../../assets/pencil-edit-button.jpg";

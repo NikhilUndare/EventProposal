@@ -3,7 +3,7 @@ import "./sample.css";
 import { PostApi, PutApi } from "./Api_call";
 import { useNavigate } from "react-router-dom";
 import { apiContext } from "../../App";
-import Navbar from "../Navbar/Navbar";
+import Navbar from "../navbar/Navbar";
 
 function CreateVendor() {
   let api_update = useContext(apiContext);
