@@ -49,9 +49,11 @@ export default function Home() {
             <Courosal />
             <div>
                 {(localStorage.getItem("selectedProposal")) ? (<div>
-                    <h4 className="mx-4 mt-2">Selected Proposal</h4>
                     <div className="container">
+                    <h4 className="mx-4 mt-2">Selected Proposal</h4>
+                     <div className="col-12 col-md-6 col-lg-3">
                         <Link to={`/viewproposal/${select._id}`} style={{ textDecoration: "none" }}>
+
                             <div className=" card mt-4 mx-4 mb-2 shadow p-2 mb-3 bg-white rounded" id="card" style={{ "width": "16rem", "maxHeight": "250px" }}>
                                 <img src={select.Images} className="card-img-top" alt="..." style={{ height: "140px", objectFit: "fill" }} />
                                 <div className="d-flex">
@@ -65,13 +67,18 @@ export default function Home() {
 
                                 </div>
                             </div>
-                        </Link>
+
+                        </Link> 
+                     </div>
+
                     </div>
                 </div>) : (<div>
 
                 </div>)}
             </div>
             <div>
+
+                <div className="container">
                 <h4 className="mx-4 mt-2">Proposals</h4>
                     <div className="row mb-3">
 
@@ -93,5 +100,7 @@ export default function Home() {
 
             </div>
 
+
+        </div>
     )
 }
