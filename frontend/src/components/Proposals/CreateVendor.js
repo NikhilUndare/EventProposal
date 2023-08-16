@@ -3,7 +3,7 @@ import "./sample.css";
 import { PostApi, PutApi } from "./Api_call";
 import { useNavigate } from "react-router-dom";
 import { apiContext } from "../../App";
-import Navbar from "../navbar/Navbar";
+import Navbar from "../Navbar/Navbar";
 
 function CreateVendor() {
   let api_update = useContext(apiContext);
@@ -43,8 +43,8 @@ function CreateVendor() {
   const [Events, setEvents] = useState("");
   return (
     <div id="component-container">
-      <Navbar />
-      <div id="form-container">
+      {/* <Navbar/> */}
+      <div id="form-contain">
         <h2 id="h2">Create Proposal</h2>
         <hr />
         <form
@@ -250,7 +250,7 @@ function CreateVendor() {
             </section>
           </div>
           <hr />
-          <button id="submit" type="submit">
+          <button  id="submit" type="submit">
             POST
           </button>
         </form>

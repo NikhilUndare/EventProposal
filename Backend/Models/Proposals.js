@@ -12,6 +12,9 @@ let proposal = new mongoose.Schema({
   Images: { type: Array, required: true },
   Food_preferances: { type: String, required: true },
   Events: { type: String, required: true },
+  Vendor_id:{type:mongoose.Schema.Types.ObjectId,ref:'vendors',required:true},
+  Vendor_name:{ type: String, required: true },
+  Vendor_email:{ type: String, required: true }
 });
 
 let proposalmodel = mongoose.model("proposals", proposal);

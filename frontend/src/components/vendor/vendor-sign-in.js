@@ -3,8 +3,10 @@ import axios from "axios";
 import VendorSignUp from "./vendor-sign-up";
 import UserSignIn from "../user/user-sign-in";
 import "./vendor-sign-in.css"
+import { useNavigate } from "react-router-dom";
 
 const VendorSignIn = () => {
+    let navigate=useNavigate()
     const [data, setFormValues] = useState({});
     const [showCreateAccountForm, setShowCreateAccountForm] = useState(false);
     const [err, setError] = useState("");
@@ -43,11 +45,11 @@ const VendorSignIn = () => {
                 if ("password not matching" === res.data) {
                     alert("Incorrect password")
                 } else {
-                    console.log(res.data)
-                    alert(`${JSON.stringify(data.email.split("@")[0])} sucessfully logined`)
+                    alert(`${JSON.stringify(data.email.split("@")[0])} sucessfully login`)
                     localStorage.setItem("headers",res.data.token)
                     localStorage.setItem("userdata",JSON.stringify(res.data.userdata))
                     localStorage.setItem("vendorlogin",true)
+                    navigate("/getproposal")
                 }
             }).catch((e) => {
                 alert("user not found")

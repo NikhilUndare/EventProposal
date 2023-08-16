@@ -8,7 +8,7 @@ body{
   background-size: cover;
   font-family: "Open Sans", sans-serif;
   height: 100vh;
-  margin-top:-20px;
+  margin-top:0px;
 }
 .icon-span {
   font-size: 25px;
@@ -63,6 +63,7 @@ body{
     letter-spacing: 0.53px;
     font-family: "Open Sans", sans-serif;
     font-size: 19px;
+    text-align: center;
 }
 
 #form-container{
@@ -111,7 +112,7 @@ body{
 #vendor-btn{
     position: absolute;
     top: 230px;
-    left: 250px;
+    left: 235px;
     background-color: #4E94F4;
     color: white;
     width: 92px;
@@ -120,6 +121,7 @@ body{
     font-size: 15px;
     border-radius: 8px;
     cursor: pointer;
+    margin-top: 15px;
 }
 #forget-password{
     font-size: 14px;

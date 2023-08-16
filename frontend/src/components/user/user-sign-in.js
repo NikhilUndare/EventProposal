@@ -59,7 +59,7 @@ const UserSignIn = () => {
             ) : (
                 <div>
                     <form id="form-container">
-                        <h4 id="form-heading">Sign in your Account</h4>
+                        <h4 className="margin-right" id="form-heading">Sign in your Account</h4>
                         <span id="errMsg">{err?`*${err}*`:""}</span>
                         <input
                             type="text"
