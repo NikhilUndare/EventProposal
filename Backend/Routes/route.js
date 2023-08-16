@@ -6,87 +6,159 @@ const User = require('../Models/User')
 const cloudinary=require('cloudinary').v2;
 const bcrypt = require('bcrypt'); 
 const saltRounds = 10;
-const { body, validationResult } = require('express-validator');
-var jwt = require('jsonwebtoken');
-const propmodel=require("../Models/Proposals")
-let router=express.Router();
-const multer=require("multer")
+const { body, validationResult } = require("express-validator");
+var jwt = require("jsonwebtoken");
+const propmodel = require("../Models/Proposals");
+let router = express.Router();
+const multer = require("multer");
 const app = express();
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }))
+app.use(express.urlencoded({ extended: true }));
 
-require('dotenv').config()
+require("dotenv").config();
 
-const fileStorageEngine=multer.diskStorage({
-  destination:(req,file,cb)=>{
-    cb(null,"./public")
+const fileStorageEngine = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "./public");
   },
-  filename:(req,file,cb)=>{
-      cb(null,Date.now()+"-"+file.originalname) 
-  }
-})
-
-
-const upload=multer({storage:fileStorageEngine});
-
-cloudinary.config({ 
-  cloud_name: 'dz6szmrzx', 
-  api_key: '946256717551921', 
-  api_secret: process.env.CLOUDINARY
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + "-" + file.originalname);
+  },
 });
 
+const upload = multer({ storage: fileStorageEngine });
 
-router.post("/createProposal",upload.single("image"),(req,res)=>{
- let {Event_Name,
-  Place_of_event,
-  Proposal_type,
-  From_date,
-  To_date,
-  Description,
-  Food_preferances,
-  Events}=req.body
+cloudinary.config({
+  cloud_name: "dz6szmrzx",
+  api_key: "946256717551921",
+  api_secret: process.env.CLOUDINARY,
+});
 
-  cloudinary.uploader.upload(req.file.path)
-  .then(image=>{
-    let new_proposal=new propmodel(
-      {
-        Event_Name,
-        Place_of_event,
-        Proposal_type,
-        From_date,
-        To_date,
-        Description,
-        Images:[image.url],
-        Food_preferances,
-        Events
-      }
-  )
+router.post("/createProposal", upload.single("Images"), (req, res) => {
+  if (req.body) {
+    let {
+      Event_Name,
+      Place_of_event,
+      Proposal_type,
+      Event_type,
+      From_date,
+      To_date,
+      Description,
+      Budget,
+      Food_preferances,
+      Events,
+    } = req.body;
 
-  new_proposal.save()
-  .then(data=>{
-      res.status(201).json(data)
-  })
-  .catch(e=>{
-      res.status(400).json({message:e.message})
-  })
-  })
-  .catch(e=>{
-    res.json({message:e.message})
-  })
+    cloudinary.uploader
+      .upload(req.file.path)
+      .then((image) => {
+        let new_proposal = new propmodel({
+          Event_Name,
+          Place_of_event,
+          Proposal_type,
+          Event_type,
+          From_date,
+          To_date,
+          Description,
+          Budget,
+          Images: [image.url],
+          Food_preferances,
+          Events,
+        });
 
-})
+        new_proposal
+          .save()
+          .then((data) => {
+            res.status(201).json(data);
+          })
+          .catch((e) => {
+            res.status(400).json({ message: e.message });
+          });
+      })
+      .catch((e) => {
+        res.json({ message: e.message });
+      });
+  } else {
+    res.json({ message: "Please Enter all the details" });
+  }
+});
 
+router.get("/getproposal", (req, res) => {
+  propmodel
+    .find()
+    .then((data) => {
+      res.json({ data });
+    })
+    .catch((e) => {
+      res.json({ message: e.message });
+    });
+});
 
-router.get("/getproposal",(req,res)=>{
-  propmodel.find()
-  .then(data=>{
-    res.json({data})
-  })
-  .catch(e=>{
-    res.json({message:e.message})
-  })
-})
+router.get("/getproposal/:id", (req, res) => {
+  propmodel
+    .findById(req.params["id"])
+    .then((data) => {
+      res.json({ data });
+    })
+    .catch((e) => {
+      res.json({ message: e.message });
+    });
+});
+
+router.put("/updateproposal/:id", upload.single("Images"), (req, res) => {
+  let {
+    Event_Name,
+    Place_of_event,
+    Proposal_type,
+    Event_type,
+    From_date,
+    To_date,
+    Description,
+    Budget,
+    Food_preferances,
+    Events,
+  } = req.body;
+
+  cloudinary.uploader
+    .upload(req.file.path)
+    .then((image) => {
+      propmodel
+        .findByIdAndUpdate(req.params["id"], {
+          Event_Name,
+          Place_of_event,
+          Proposal_type,
+          Event_type,
+          From_date,
+          To_date,
+          Description,
+          Budget,
+          Images: [image.url],
+          Food_preferances,
+          Events,
+        })
+        .then((data) => {
+          res.json({ data });
+        })
+        .catch((e) => {
+          res.json({ message: e.message });
+        });
+    })
+    .catch((e) => {
+      res.json({ message: e.message });
+    });
+});
+
+router.delete("/deleteproposal/:id", (req, res) => {
+  propmodel
+    .findByIdAndDelete(req.params["id"])
+    .then((data) => {
+      res.json({ message: "Propsal deleted", data });
+    })
+    .catch((e) => {
+      res.json({ message: e.message });
+    });
+});
 
 
 
@@ -177,19 +249,16 @@ router.post("/vendorlogin",
         }
     })
 
-    router.post('/logout',async(req,res)=>{
-        token = "";
-        res.status(200).send("loggedout successfully")
-    })
+router.post("/logout", async (req, res) => {
+  token = "";
+  res.status(200).send("loggedout successfully");
+});
 
-
-// for creating a new user 
-router.post('/createuser', async (req, res) => {
-    try {
-
-        const salt = await bcrypt.genSalt(10);
-        const securePassword = await bcrypt.hash(req.body.password, salt);
-
+// for creating a new user
+router.post("/createuser", async (req, res) => {
+  try {
+    const salt = await bcrypt.genSalt(10);
+    const securePassword = await bcrypt.hash(req.body.password, salt);
 
         await User.create({
             name: req.body.name,
@@ -207,35 +276,35 @@ router.post('/createuser', async (req, res) => {
 
 // login for existing user
 
-router.post('/login', async (req, res) => {
-    const email = req.body.email
-    const password = req.body.password
-    const contact = req.body.contact
-    try {
-        let userdata
-        if (email) {
-            userdata = await User.findOne({ email })
-            if (!userdata) {
-                return res.status(400).json({ error: "User does not exist" });
-            }
-        } else {
-            userdata = await User.findOne({ contact })
-            if (!userdata) {
-                return res.status(400).json({ error: "User does not exist" });
-            }
-        }
+router.post("/login", async (req, res) => {
+  const email = req.body.email;
+  const password = req.body.password;
+  const contact = req.body.contact;
+  try {
+    let userdata;
+    if (email) {
+      userdata = await User.findOne({ email });
+      if (!userdata) {
+        return res.status(400).json({ error: "User does not exist" });
+      }
+    } else {
+      userdata = await User.findOne({ contact });
+      if (!userdata) {
+        return res.status(400).json({ error: "User does not exist" });
+      }
+    }
 
-        const pwdCompare = bcrypt.compareSync(password, userdata.password)
+    const pwdCompare = bcrypt.compareSync(password, userdata.password);
 
         if (!pwdCompare) {
             return res.send("password not matching");
         }
 
-        const data = {
-            user: {
-                id: userdata.id
-            }
-        }
+    const data = {
+      user: {
+        id: userdata.id,
+      },
+    };
 
         const authToken = jwt.sign(data, process.env.SECRET_CODE)
         return res.json({ success: true, authToken ,userdata})
