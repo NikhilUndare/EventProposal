@@ -37,10 +37,11 @@ cloudinary.config({
 });
 
 
-router.post("/createProposal",upload.single("image"),(req,res)=>{
+router.post("/createProposal",upload.single("Images"),(req,res)=>{
  let {Event_Name,
   Place_of_event,
   Proposal_type,
+  Budget,
   From_date,
   To_date,
   Description,
@@ -54,6 +55,7 @@ router.post("/createProposal",upload.single("image"),(req,res)=>{
         Event_Name,
         Place_of_event,
         Proposal_type,
+        Budget,
         From_date,
         To_date,
         Description,
@@ -88,14 +90,16 @@ router.get("/getproposal",(req,res)=>{
   })
 })
 
+router.get("/getproposal/:id",(req,res)=>{
+    propmodel.findById(req.params["id"])
+    .then(data=>{
+      res.json({data})
+    })
+    .catch(e=>{
+      res.json({message:e.message})
+    })
+  })
 
-
-
-module.exports=router;
-
-
-
-const router = express.Router();
 // vendor login
 router.post("/vendorlogin",
     async (req, res) => {
@@ -241,7 +245,7 @@ router.post('/login', async (req, res) => {
         }
 
         const authToken = jwt.sign(data, process.env.SECRET_CODE)
-        return res.json({ success: true, authToken })
+        return res.json({ success: true, authToken,data: userdata })
     } catch (error) {
         console.log(error)
         res.json({ message: error.message })
