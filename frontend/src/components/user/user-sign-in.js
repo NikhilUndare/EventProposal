@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import axios from "axios";
 import UserSignUp from "./user-sign-up";
 import "./user.css";
+import { useNavigate } from "react-router";
 
 const UserSignIn = () => {
+    const navigate = useNavigate()
     const [showCreateAccountForm, setShowCreateAccountForm] = useState(false);
     const [data, setFormValues] = useState({});
     const [err, setError] = useState("");
@@ -42,9 +44,11 @@ const UserSignIn = () => {
             }else{
                 console.log(res.data)
                 alert(`${JSON.stringify(data.email.split("@")[0])} sucessfully logined`)
+                
                 localStorage.setItem("headers",res.data.authToken)
                 localStorage.setItem("userdata",JSON.stringify(res.data.userdata))
                 localStorage.setItem("userlogin",true)
+                navigate('/userHome')
             }       
           }).catch((e)=>{
             alert("user not found")

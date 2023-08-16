@@ -24,16 +24,7 @@ mongoose
     console.log("connection to DB failed", err);
   });
 
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  next();
-});
-
-app.use("/api", router);
+app.use('/api',router)
 
 app.use((req, res) => {
   res.send("it is working");

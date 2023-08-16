@@ -1,0 +1,11 @@
+#logo {
+    font: normal normal bold 32px;
+    font-weight: 500;
+}
+
+#img{
+    margin-right: 5px;
+}
+#card{
+    padding: 0 !important;
+  }
