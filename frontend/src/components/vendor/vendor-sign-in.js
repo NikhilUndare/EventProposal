@@ -18,7 +18,11 @@ const VendorSignIn = () => {
     };
     const handleErrors = (e) => {
         e.preventDefault();
-        if (!data.email||!data.password) {
+
+       
+
+        if (!data.email  || !data.password ) {
+
             setError("Kindly Fill all the details")
             return false
         }

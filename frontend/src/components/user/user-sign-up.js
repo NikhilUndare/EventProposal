@@ -36,6 +36,7 @@ const UserSignUp = (props) => {
             setError("Passwords are not matching");
             return false
         }
+        
         return true
     }
     async function handleSubmit(e) {
