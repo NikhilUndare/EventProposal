@@ -7,6 +7,19 @@
     margin-top:0px;
     position: relative;
 }
+#hder
+{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0px;
+    position: relative;
+}
+#x
+{
+    position: absolute;
+    cursor: pointer;
+    left: 950px;
+}
 #form-contain
 {
     width: 1000px;

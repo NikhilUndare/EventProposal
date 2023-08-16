@@ -3,7 +3,6 @@ import "./sample.css";
 import { PostApi, PutApi } from "./Api_call";
 import { useNavigate } from "react-router-dom";
 
-import Navbar from "../Navbar/Navbar";
 import EventContext from "../users/context/EventContext";
 
 function CreateVendor() {
@@ -46,8 +45,19 @@ function CreateVendor() {
     <div id="component-container">
       {/* <Navbar/> */}
       <div id="form-contain">
+       
+        <div id="hder">
         <h2 id="h2">Create Proposal</h2>
-        <hr />
+        <h1 
+        id="x"
+        onClick={()=>{
+          navigate("/getproposal")
+        }}
+        >X</h1>
+        </div>
+       
+
+        <hr style={{margin:"0px"}} />
         <form
           encType="multipart/form-data"
           onSubmit={(e) => {

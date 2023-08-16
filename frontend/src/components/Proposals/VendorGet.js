@@ -5,7 +5,7 @@ import edit from "../../assets/pencil-edit-button.jpg";
 import dele from "../../assets/delete.jpg";
 import { DeleteApi, GetApi } from "./Api_call";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../Navbar/Navbar";
+import Navbar from "../navbar/Navbar";
 import EventContext from "../users/context/EventContext";
 
 function VendorGet() {

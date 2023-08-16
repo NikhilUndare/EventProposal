@@ -28,6 +28,10 @@ const UserSignUp = (props) => {
             setError("incorrect contact")
             return false
         }
+        if(data.password.length < 6){
+            setError("password should have 6 or more characters")
+            return false
+        }
         if (data.password !== data.confirmPassword) {
             setError("Passwords are not matching");
             return false

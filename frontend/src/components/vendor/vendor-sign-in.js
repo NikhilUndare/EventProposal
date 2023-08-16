@@ -18,18 +18,18 @@ const VendorSignIn = () => {
     };
     const handleErrors = (e) => {
         e.preventDefault();
-        if (data.email === "" || !data.password === "") {
+        if (!data.email||!data.password) {
             setError("Kindly Fill all the details")
             return false
         }
         console.log(data, "handleerrors")
         let regexEmail = /^\w+([\.-]?\w+)*@gmail\.com$/g
-        if (data.email.includes("@") || data.email.includes(".")) {
+        
             if (!regexEmail.test(data.email)) {
                 setError("invalid email format")
                 return false
             }
-        }
+        
         return true
     }
     async function handleSubmit(e) {
