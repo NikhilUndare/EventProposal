@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import Courosal from "../Courosal";
 import Proposals from "../Proposals";
-import Navbar from "../navbar/Navbar";
+import Navbar from "../navbar/Navbar1";
 import EventContext from "../context/EventContext";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom"

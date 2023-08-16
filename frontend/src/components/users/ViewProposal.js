@@ -1,5 +1,5 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
-import Navbar from "./navbar/Navbar";
+import Navbar from "./navbar/Navbar1";
 import { useEffect, useState } from "react";
 import { useContext } from "react";
 import EventContext from "./context/EventContext";
