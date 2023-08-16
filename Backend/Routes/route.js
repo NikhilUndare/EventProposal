@@ -18,6 +18,17 @@ app.use(express.urlencoded({ extended: true }));
 
 require("dotenv").config();
 
+
+function Verifying(req,res,next){
+  jwt.verify(req.headers.authorization,process.env.SECRET_CODE,function(err, decoded) {
+    req.vendorid=decoded.data['_id']
+    req.name=decoded.data['name']
+    req.email=decoded.data['email']
+    next()
+  });
+
+}
+
 const fileStorageEngine = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "./public");
@@ -35,7 +46,7 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY,
 });
 
-router.post("/createProposal", upload.single("Images"), (req, res) => {
+router.post("/createProposal", upload.single("Images"),Verifying,(req, res) => {
   if (req.body) {
     let {
       Event_Name,
@@ -65,6 +76,9 @@ router.post("/createProposal", upload.single("Images"), (req, res) => {
           Images: [image.url],
           Food_preferances,
           Events,
+          Vendor_id:req.vendorid,
+          Vendor_name:req.name,
+          Vendor_email:req.email
         });
 
         new_proposal
@@ -184,8 +198,7 @@ router.post("/vendorlogin",
                 if (result) {
                     console.log(result,"result")
                     const token = jwt.sign({
-                        exp: Math.floor(Date.now() / 1000) + (60 * 60),
-                        data: 'foobar'
+                        data: user_data 
                     }, process.env.SECRET_CODE);
                     return res.json({token,userdata:user_data})
                 }

@@ -1,5 +1,6 @@
 function PostApi(data) {
   return fetch(`http://localhost:8080/api/createProposal`, {
+    headers: { "Authorization":localStorage.getItem("headers")},
     method: "POST",
     body: data,
   }).then((res) => {

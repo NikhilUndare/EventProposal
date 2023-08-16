@@ -7,7 +7,6 @@
 }
 
 .box1.expanded1 {
-  padding-left: 30px;
   position: absolute;
   top: 75px;
   width: 370px;
@@ -91,10 +90,13 @@
   opacity: 1;
   padding-left: 15px;
 }
-
+.margin-right
+{
+  margin-right: 60px;
+}
 #signin-btn2 {
   position: absolute;
-  top: 430px;
+  top: 420px;
   left: 39px;
   color: #4e94f4;
   font-size: 15px;
@@ -105,7 +107,7 @@
 #user-btn2 {
   position: absolute;
   top: 410px;
-  left: 285px;
+  left: 230px;
   background-color: #4e94f4;
   color: white;
   width: 92px;

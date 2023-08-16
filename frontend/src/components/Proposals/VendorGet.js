@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import Navbar from "../navbar/Navbar";
 import "./VendorGet.css";
 import search from "../../assets/search.jpg";
 import edit from "../../assets/pencil-edit-button.jpg";
@@ -7,6 +6,7 @@ import dele from "../../assets/delete.jpg";
 import { DeleteApi, GetApi } from "./Api_call";
 import { useNavigate } from "react-router-dom";
 import { apiContext } from "../../App";
+import Navbar from "../Navbar/Navbar";
 
 function VendorGet() {
   let api_update = useContext(apiContext);
@@ -22,7 +22,7 @@ function VendorGet() {
   let rev = propose.reverse();
   return (
     <>
-      <Navbar />
+      <Navbar/>
       <div id="pro-container">
         <div id="bar">
           <h5>Proposals</h5>
