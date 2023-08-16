@@ -1,5 +1,5 @@
 import EventContext from "./EventContext"
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 
 const EventState = (props) => {
      

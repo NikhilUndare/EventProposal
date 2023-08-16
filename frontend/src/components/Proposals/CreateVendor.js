@@ -3,7 +3,7 @@ import "./sample.css";
 import { PostApi, PutApi } from "./Api_call";
 import { useNavigate } from "react-router-dom";
 
-import Navbar from "../Navbar/Navbar";
+
 import EventContext from "../users/context/EventContext";
 
 function CreateVendor() {
