@@ -1,38 +1,42 @@
-const express = require('express');
-const mongoose = require('mongoose');
+const express = require("express");
+const mongoose = require("mongoose");
 const PORT = process.env.PORT || 8080;
 const app = express();
+const cors = require("cors");
 
-
-
-const router = require('./Routes/route')
-
+const router = require("./Routes/route");
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }))
+app.use(express.urlencoded({ extended: false }));
 
+require("dotenv").config();
+app.use(cors());
 
-require('dotenv').config()
+mongoose
+  .connect(process.env.MONGODB_URL + process.env.MONGODB_NAME)
 
+  .then((response) => {
+    console.log("connected to mongod DB successfully!");
+  })
+  .catch((err) => {
+    console.log("connection to DB failed", err);
+  });
 
-mongoose.connect(process.env.MONGODB_URL + process.env.MONGODB_NAME)
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
 
-    .then((response) => {
-        console.log("connected to mongod DB successfully!");
-    })
-    .catch(err => {
-        console.log("connection to DB failed", err);
-    })
+app.use("/api", router);
 
+app.use((req, res) => {
+  res.send("it is working");
+});
 
-
-app.use('/api',router);
-
-app.use((req,res)=>{
-    res.send("it is working")
-})
-
-
- app.listen(PORT,()=>{
- console.log(`Server is running on port ${PORT}...`)
-})
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}...`);
+});
