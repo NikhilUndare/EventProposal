@@ -5,7 +5,7 @@ import edit from "../../assets/pencil-edit-button.jpg";
 import dele from "../../assets/delete.jpg";
 import { DeleteApi, GetApi } from "./Api_call";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../navbar/Navbar";
+import Navbar from '../Navbar/Navbar'
 import EventContext from "../users/context/EventContext";
 
 function VendorGet() {
@@ -17,17 +17,17 @@ function VendorGet() {
     GetApi().then((data) => {
       console.log(data.data);
       setPropose(data.data);
-      if(!localStorage.getItem('headers') && !localStorage.getItem('vendorlogin')){
-            navigate('/')
-        }
+      if (!localStorage.getItem('headers') && !localStorage.getItem('vendorlogin')) {
+        navigate('/')
+      }
     });
-     
+
 
   }, [sample]);
   let rev = propose.reverse();
   return (
     <>
-      <Navbar/>
+      <Navbar />
       <div id="pro-container">
         <div id="bar">
           <h5>Proposals</h5>
@@ -82,8 +82,8 @@ function VendorGet() {
                 </div>
                 <div className="border">
                   <div className="paddin">
-                    <p className="bottom">Event Type</p>
-                    <p className="zero-margin">Marriage</p>
+                    <p className="bottom">Budget</p>
+                    <p className="zero-margin">{data.Budget}</p>
                   </div>
                 </div>
 

@@ -49,10 +49,6 @@ export default function Home() {
             <Courosal />
             <div>
                 {(localStorage.getItem("selectedProposal")) ? (<div>
-
-                 
-
-                    
                     <div className="container">
                     <h4 className="mx-4 mt-2">Selected Proposal</h4>
                      <div className="col-12 col-md-6 col-lg-3">
