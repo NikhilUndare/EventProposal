@@ -10,8 +10,12 @@ function PostApi(data) {
   });
 }
 
+
 function GetApi() {
-  return fetch(`http://localhost:8080/api/getproposal`).then((data) =>
+  return fetch(`http://localhost:8080/api/getvendorproposal`,{
+    headers: { "Authorization":localStorage.getItem("headers")}
+  })
+  .then((data) =>
     data.json()
   );
 }
