@@ -92,6 +92,7 @@ function VendorGet() {
                     <img
                       src={edit}
                       alt="editicon"
+                      id="edit-icon-proposal"
                       onClick={() => {
                         api_update.Updation({ id: data._id, type: "PUT" });
                         navigate("/createproposal");
@@ -103,6 +104,7 @@ function VendorGet() {
                       style={{ marginLeft: "20px" }}
                       src={dele}
                       alt="deleteicon"
+                      id="delete-icon-proposal"
                       onClick={() => {
                         DeleteApi(data._id).then((data) => {
                           console.log(data.message);

@@ -48,8 +48,7 @@ margin-left: 20px;
 #edel
 {
     display: flex;
-    margin-top: 10px;
-    margin-left: 300px;
+    margin-left: 20%;
     cursor: pointer;
 }
 #bar
@@ -75,4 +74,11 @@ input
 {
     height: 30px;
     margin-left: 5px;
+}
+
+#edit-icon-proposal,
+#delete-icon-proposal{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

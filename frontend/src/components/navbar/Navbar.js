@@ -10,8 +10,7 @@ export default function Navbar() {
         setOpen(!open)
     }
     function handleLogOut(){
-        localStorage.removeItem('headers')
-        localStorage.removeItem('vendorlogin')
+        localStorage.clear();
         navigate('/')
     }
   let {name}=JSON.parse(localStorage.getItem("userdata"))
